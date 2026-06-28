@@ -1,1 +1,222 @@
+Market Data
 
+Overview
+
+The Market Data module is responsible for collecting, normalizing, and distributing real-time and historical market information used throughout the AI Treasury Agent.
+
+It provides pricing, liquidity, volatility, macroeconomic indicators, and on-chain metrics that enable the Portfolio Manager and Risk Engine to make informed treasury decisions.
+
+The module acts as a trusted data layer and does not perform portfolio analysis or transaction execution.
+
+Objectives
+
+The Market Data module aims to:
+
+Retrieve real-time token prices
+Monitor liquidity across markets
+Measure market volatility
+Track macroeconomic indicators
+Collect on-chain metrics
+Normalize data from multiple providers
+Deliver reliable market signals to downstream modules
+Data Sources
+
+The module can integrate with multiple providers to ensure data redundancy and reliability.
+
+Price Feeds
+
+Supported providers may include:
+
+CoinGecko API
+CoinMarketCap API
+Chainlink Price Feeds
+Pyth Network
+Exchange APIs
+On-Chain Data
+
+Examples include:
+
+Wallet activity
+Gas prices
+Transaction volume
+Total Value Locked (TVL)
+Protocol usage
+Token supply
+Bridge activity
+Market Liquidity
+
+Collected metrics include:
+
+Order book depth
+Trading volume
+Bid/ask spread
+Slippage estimates
+Market capitalization
+Exchange liquidity
+Macroeconomic Indicators
+
+Optional external signals:
+
+Interest rates
+Inflation
+USD strength
+Bitcoin dominance
+Ethereum network activity
+Stablecoin market capitalization
+Supported Market Metrics
+Token Prices
+
+Example:
+
+{
+  "symbol": "ETH",
+  "price_usd": 3348.42,
+  "change_24h": 2.6,
+  "last_updated": "2026-06-28T14:00:00Z"
+}
+Liquidity Metrics
+
+Example:
+
+{
+  "symbol": "ETH",
+  "daily_volume_usd": 14800000000,
+  "market_depth_usd": 95000000,
+  "estimated_slippage": 0.18
+}
+Volatility Metrics
+
+Example:
+
+{
+  "symbol": "ETH",
+  "volatility_24h": 4.2,
+  "volatility_30d": 28.7,
+  "risk_level": "Medium"
+}
+On-Chain Metrics
+
+Example:
+
+{
+  "network": "Ethereum",
+  "gas_price_gwei": 18,
+  "daily_transactions": 1423500,
+  "active_addresses": 621400
+}
+Data Normalization
+
+Since market information may come from different providers, all responses should be normalized into a consistent internal format.
+
+Example:
+
+{
+  "asset": "ETH",
+  "price": 3348.42,
+  "currency": "USD",
+  "volume_24h": 14800000000,
+  "volatility": 4.2,
+  "source": "Chainlink"
+}
+Market Signals
+
+The module generates standardized signals that can be consumed by the Portfolio Manager and Risk Engine.
+
+Examples:
+
+Bullish trend
+Bearish trend
+High volatility
+Low liquidity
+Stable market
+Increased trading activity
+Elevated gas prices
+Stablecoin depeg warning
+
+Example:
+
+{
+  "signal": "high_volatility",
+  "severity": "medium",
+  "asset": "ETH",
+  "confidence": 0.92
+}
+Integration With Portfolio Manager
+
+The Portfolio Manager consumes:
+
+Token prices
+Portfolio valuations
+Allocation values
+Market trends
+Liquidity information
+Yield opportunities
+
+These inputs help determine treasury allocation strategies and rebalancing recommendations.
+
+Integration With Risk Engine
+
+The Risk Engine consumes:
+
+Price volatility
+Liquidity metrics
+Stablecoin health
+Market stress indicators
+Correlation data
+Trading volume
+
+These signals contribute to the overall treasury risk score.
+
+Data Refresh Strategy
+
+Suggested update frequencies:
+
+Data Type	Refresh Interval
+Token Prices	Every 30–60 seconds
+Wallet Valuations	Every 1 minute
+Liquidity Metrics	Every 5 minutes
+Gas Prices	Every 30 seconds
+On-Chain Activity	Every 5 minutes
+Macroeconomic Indicators	Daily
+Reliability
+
+To improve resilience, the module should:
+
+Use multiple data providers
+Cache recent responses
+Retry failed requests
+Detect stale data
+Validate price anomalies
+Log provider outages
+Fall back to secondary sources when needed
+Example Workflow
+Fetch market prices from multiple providers.
+Validate and normalize incoming data.
+Retrieve liquidity and volatility metrics.
+Collect on-chain indicators.
+Generate market signals.
+Publish normalized data to the Portfolio Manager and Risk Engine.
+Security Considerations
+
+The Market Data module should:
+
+Never trust a single data provider
+Validate abnormal price changes
+Detect stale or missing data
+Log all external API failures
+Rate-limit provider requests
+Monitor API availability
+Future Enhancements
+
+Planned capabilities include:
+
+AI-based market sentiment analysis
+Social media and news sentiment integration
+Predictive price forecasting
+Cross-chain liquidity monitoring
+Stablecoin health dashboard
+Yield opportunity discovery
+Protocol risk scoring
+Correlation analysis across treasury assets
+Real-time event detection
+Machine learning–based anomaly detection
