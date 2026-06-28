@@ -1,17 +1,245 @@
-Define risk engine module
-
-Document the logic for asset concentration, volatility, liquidity, and counterparty risk.
-
-
 Risk Engine
+Overview
 
-Evaluates treasury exposure and portfolio risk.
+The Risk Engine is responsible for continuously evaluating the financial health and exposure of the treasury.
 
-Responsibilities:
+It aggregates wallet balances, market conditions, liquidity metrics, and portfolio allocation to calculate an overall treasury risk score. The Risk Engine provides actionable insights to the Portfolio Manager while ensuring that treasury policies and risk limits are respected.
 
-Asset concentration analysis
-Stablecoin risk monitoring
-Volatility alerts
-Counterparty exposure
-Liquidity risk
-Scenario simulation
+The module is analytical only—it does not execute transactions.
+
+Objectives
+
+The Risk Engine aims to:
+
+Measure portfolio risk in real time
+Detect excessive asset concentration
+Monitor market volatility
+Evaluate liquidity exposure
+Assess counterparty risk
+Generate risk alerts
+Recommend mitigation strategies
+Support treasury governance decisions
+Risk Categories
+Asset Concentration Risk
+
+Measures how much of the treasury depends on a single asset.
+
+Example:
+
+ETH = 68%
+USDC = 18%
+TAIKO = 8%
+Other = 6%
+
+High concentration may expose the treasury to unnecessary market volatility.
+
+Stablecoin Risk
+
+Evaluates exposure across stablecoins.
+
+Factors include:
+
+Stablecoin issuer
+Peg stability
+Regulatory exposure
+Reserve transparency
+Historical depeg events
+
+Example:
+
+Stablecoin	Allocation	Risk
+USDC	42%	Low
+USDT	18%	Medium
+DAI	9%	Low
+Market Risk
+
+Measures the effect of market conditions on treasury value.
+
+Signals include:
+
+Price volatility
+Market trend
+Trading volume
+Liquidity changes
+Correlation between assets
+Liquidity Risk
+
+Evaluates how easily treasury assets can be converted into cash.
+
+Metrics:
+
+Daily trading volume
+Market depth
+Slippage estimates
+Locked assets
+Vesting schedules
+Counterparty Risk
+
+Measures exposure to third-party protocols.
+
+Examples:
+
+Lending platforms
+Bridges
+Staking providers
+Custodians
+Yield aggregators
+
+The engine assigns higher risk scores to less established or highly concentrated counterparties.
+
+Operational Risk
+
+Monitors risks associated with treasury operations.
+
+Examples:
+
+Wallet permissions
+Multisig configuration
+Key management
+Transaction approval workflows
+Failed transaction history
+Risk Score
+
+The engine produces a unified score ranging from 0 to 100.
+
+Score	Level
+0–20	Very Low
+21–40	Low
+41–60	Moderate
+61–80	High
+81–100	Critical
+
+Example:
+
+{
+  "risk_score": 67,
+  "risk_level": "High",
+  "generated_at": "2026-06-28T14:00:00Z"
+}
+Alert Types
+
+The Risk Engine can generate alerts for situations such as:
+
+Asset concentration exceeds policy
+Stablecoin exposure is too high
+Liquidity falls below threshold
+Portfolio volatility increases
+Large wallet movement detected
+Counterparty exposure exceeds limit
+Treasury value drops sharply
+Significant market event detected
+
+Example:
+
+{
+  "alert_type": "concentration_risk",
+  "severity": "high",
+  "message": "ETH allocation exceeds treasury policy limit.",
+  "recommended_action": "Rebalance portfolio."
+}
+Risk Evaluation Workflow
+Wallet Data
+      │
+      ▼
+Market Data
+      │
+      ▼
+Portfolio Analysis
+      │
+      ▼
+Risk Calculations
+      │
+      ▼
+Risk Score
+      │
+      ▼
+Alerts & Recommendations
+Integration With Other Modules
+Wallets
+
+Provides:
+
+Balances
+Transactions
+Wallet classifications
+Market Data
+
+Provides:
+
+Prices
+Volatility
+Liquidity
+Trading volume
+Yield information
+Portfolio Manager
+
+Consumes:
+
+Risk score
+Risk alerts
+Portfolio recommendations
+Exposure metrics
+Execution Layer
+
+Receives:
+
+Risk-approved treasury actions
+Suggested portfolio rebalancing
+Execution constraints
+Treasury Policies
+
+The engine can validate treasury rules such as:
+
+Maximum asset allocation
+Minimum stablecoin reserves
+Maximum protocol exposure
+Chain diversification requirements
+Minimum liquidity buffer
+Approved counterparties only
+
+Example policy:
+
+{
+  "max_single_asset": 40,
+  "min_stablecoin": 20,
+  "max_protocol_exposure": 25
+}
+Example Recommendation
+
+Input:
+
+ETH allocation: 65%
+Stablecoins: 15%
+Risk score: 74
+
+Recommendation:
+
+{
+  "summary": "Treasury has excessive exposure to ETH.",
+  "recommended_action": "Reduce ETH allocation to 45% and increase stablecoin reserves.",
+  "priority": "High"
+}
+Security Principles
+
+The Risk Engine follows these principles:
+
+Read-only analysis
+No transaction execution
+Deterministic calculations
+Transparent scoring methodology
+Complete audit trail
+Human oversight for treasury decisions
+Future Enhancements
+
+Planned capabilities include:
+
+AI-based predictive risk modeling
+Historical risk trend analysis
+Stress testing and scenario simulations
+VaR (Value at Risk) calculations
+Correlation matrix visualization
+Stablecoin depeg prediction
+Protocol health scoring
+On-chain anomaly detection
+Governance policy validation
+Machine learning–driven treasury optimization
