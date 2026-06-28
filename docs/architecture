@@ -1,11 +1,20 @@
-Architecture Diagram
+Architecture
 
+Overview
 
-Create a Mermaid diagram showing the relationship between Wallets, Risk Engine, Market Data, Execution Layer, and Portfolio Manager.
+ai-treasury-agent is designed as an AI-powered treasury management system for crypto-native organizations, DAOs, protocols, and companies holding digital assets.
 
+The system monitors wallets, consumes market data, evaluates portfolio risk, and prepares treasury recommendations through an AI decision layer.
 
-  
-  flowchart TD
+The architecture is divided into five main components:
+
+Wallets
+Market Data
+Risk Engine
+Portfolio Manager
+Execution Layer
+High-Level Architecture
+flowchart TD
 
     A[Wallets] --> B[Portfolio Manager]
     C[Market Data] --> B
@@ -18,3 +27,127 @@ Create a Mermaid diagram showing the relationship between Wallets, Risk Engine, 
     C --> H[Price & Liquidity Feeds]
     D --> I[Risk Alerts]
     B --> J[Treasury Reports]
+
+Component Responsibilities
+
+Wallets
+
+The Wallets module tracks treasury addresses across supported blockchains.
+
+Responsibilities:
+
+Monitor wallet balances
+Track inflows and outflows
+Classify wallets by purpose
+Detect abnormal movements
+Support read-only treasury visibility
+Prepare future multisig integration
+Market Data
+
+The Market Data module provides external financial and on-chain information.
+
+Responsibilities:
+
+Fetch token prices
+Monitor liquidity depth
+Track volatility
+Analyze yield opportunities
+Collect macro and market indicators
+Provide normalized data to the Portfolio Manager
+Risk Engine
+
+The Risk Engine evaluates the current treasury exposure.
+
+Responsibilities:
+
+Analyze asset concentration
+Monitor stablecoin exposure
+Detect volatility risk
+Evaluate liquidity risk
+Score counterparty exposure
+Generate risk alerts
+Support scenario simulations
+Portfolio Manager
+
+The Portfolio Manager is the central decision layer of the system.
+
+Responsibilities:
+
+Combine wallet data, market data, and risk signals
+Evaluate portfolio allocation
+Generate treasury recommendations
+Produce reports
+Decide whether a rebalance should be suggested
+Send proposed actions to the Execution Layer
+Execution Layer
+
+The Execution Layer prepares possible treasury actions but does not execute them automatically by default.
+
+Responsibilities:
+
+Prepare swap recommendations
+Simulate rebalancing
+Estimate gas costs
+Suggest bridges when needed
+Generate approval-ready transaction plans
+Support future multisig workflows
+Data Flow
+sequenceDiagram
+    participant Wallets
+    participant MarketData
+    participant PortfolioManager
+    participant RiskEngine
+    participant ExecutionLayer
+
+    Wallets->>PortfolioManager: Send balances and transactions
+    MarketData->>PortfolioManager: Send prices, liquidity, and volatility
+    PortfolioManager->>RiskEngine: Request risk analysis
+    RiskEngine-->>PortfolioManager: Return risk score and alerts
+    PortfolioManager->>ExecutionLayer: Send recommended action
+    ExecutionLayer-->>PortfolioManager: Return execution simulation
+
+Example Treasury Workflow
+Wallets module detects the current portfolio balances.
+Market Data module fetches updated prices and liquidity.
+Portfolio Manager calculates the current allocation.
+Risk Engine analyzes exposure, volatility, and concentration.
+Portfolio Manager generates a recommendation.
+Execution Layer prepares a simulated action.
+The final recommendation is presented for human approval.
+AI Decision Layer
+
+The AI agent does not directly control funds. Its role is to analyze treasury data and generate structured recommendations.
+
+Example output:
+
+{
+  "risk_score": 72,
+  "summary": "Treasury has high exposure to volatile assets.",
+  "recommendation": "Increase stablecoin allocation from 20% to 35%.",
+  "action_required": true,
+  "execution_type": "rebalance_simulation"
+}
+Security Principles
+
+The system should follow conservative treasury security rules:
+
+Read-only wallet monitoring by default
+No private keys stored in the application
+No automatic execution without approval
+Multisig-first design
+Human confirmation before transactions
+Full audit trail for recommendations
+Clear separation between analysis and execution
+Future Architecture Extensions
+
+Potential future improvements:
+
+Multichain wallet monitoring
+DAO governance integration
+EigenLayer AVS-compatible risk monitoring
+Automated treasury reporting
+Telegram and Slack alerts
+Historical portfolio performance
+Real-time risk scoring
+Stablecoin depeg detection
+Policy-based treasury automation
