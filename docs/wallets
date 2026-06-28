@@ -1,18 +1,246 @@
-Define wallet monitoring module
-
-
 Wallets
 
-Tracks treasury wallets across multiple chains.
+Overview
 
-Responsibilities:
+The Wallets module is responsible for monitoring treasury wallet addresses across supported blockchains.
 
-Monitor balances
-Track inflows and outflows
-Detect abnormal movements
+Its main goal is to provide read-only visibility into treasury balances, transactions, inflows, outflows, and wallet behavior. This module does not control private keys and does not execute transactions directly.
+
+Wallet data is used by the Portfolio Manager and Risk Engine to evaluate treasury exposure and generate recommendations.
+
+Objectives
+
+The Wallets module should:
+
+Track treasury wallet balances
+Monitor incoming and outgoing transactions
 Classify wallets by purpose
-Support multisig and institutional custody flows
+Detect abnormal activity
+Provide normalized wallet data to other modules
+Support future multisig and custody integrations
+Supported Wallet Types
 
+The system should support different treasury wallet categories:
 
+1. Operating Wallet
 
-Document how the agent will track balances, transactions, and wallet classification.
+Used for day-to-day treasury operations.
+
+Examples:
+
+Vendor payments
+Gas expenses
+Operational transfers
+Short-term liquidity
+2. Reserve Wallet
+
+Used to hold long-term treasury reserves.
+
+Examples:
+
+ETH reserves
+Stablecoin reserves
+Strategic ecosystem assets
+3. Yield Wallet
+
+Used for assets deployed into yield strategies.
+
+Examples:
+
+Lending protocols
+Staking positions
+Liquidity pools
+Restaking strategies
+4. Multisig Wallet
+
+Used for governance-controlled treasury funds.
+
+Examples:
+
+Safe multisig
+DAO treasury wallets
+Board-approved treasury accounts
+5. Execution Wallet
+
+Used to prepare or route approved treasury actions.
+
+Examples:
+
+Rebalancing
+Swaps
+Bridge transactions
+Temporary execution flows
+Wallet Data Model
+
+Example wallet object:
+
+{
+  "wallet_id": "wallet_001",
+  "name": "Main Treasury Wallet",
+  "address": "0x0000000000000000000000000000000000000000",
+  "chain": "ethereum",
+  "type": "reserve",
+  "status": "active",
+  "risk_level": "medium",
+  "tags": ["treasury", "long-term", "eth-reserve"]
+}
+Balance Data Model
+
+Example balance object:
+
+{
+  "wallet_id": "wallet_001",
+  "chain": "ethereum",
+  "assets": [
+    {
+      "symbol": "ETH",
+      "contract_address": "native",
+      "amount": "125.50",
+      "usd_value": "420000",
+      "allocation_percentage": 42.5
+    },
+    {
+      "symbol": "USDC",
+      "contract_address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "amount": "250000",
+      "usd_value": "250000",
+      "allocation_percentage": 25.3
+    }
+  ]
+}
+Transaction Data Model
+
+Example transaction object:
+
+{
+  "tx_hash": "0xabc123",
+  "wallet_id": "wallet_001",
+  "chain": "ethereum",
+  "direction": "outflow",
+  "asset": "USDC",
+  "amount": "50000",
+  "usd_value": "50000",
+  "counterparty": "0x1111111111111111111111111111111111111111",
+  "timestamp": "2026-06-28T12:00:00Z",
+  "classification": "treasury_rebalance"
+}
+Core Responsibilities
+Balance Monitoring
+
+The module should continuously track balances for all registered wallets.
+
+It should identify:
+
+Current token balances
+Native chain balances
+USD value per asset
+Allocation by wallet
+Allocation by chain
+Total treasury value
+Transaction Monitoring
+
+The module should track all relevant wallet transactions.
+
+It should identify:
+
+Inflows
+Outflows
+Internal transfers
+Large movements
+Unknown counterparties
+Repeated transaction patterns
+Unexpected token movements
+Wallet Classification
+
+Each wallet should be classified based on its treasury function.
+
+Example categories:
+
+Operating
+Reserve
+Yield
+Multisig
+Execution
+Governance
+Unknown
+
+This classification helps the Portfolio Manager understand how funds are distributed across the treasury structure.
+
+Abnormal Activity Detection
+
+The Wallets module should flag unusual behavior.
+
+Examples:
+
+Large unexpected outflow
+Transfer to unknown counterparty
+Rapid balance decrease
+New token received from unknown source
+Unusual transaction frequency
+Wallet balance below minimum threshold
+
+Example alert:
+
+{
+  "alert_type": "large_outflow",
+  "wallet_id": "wallet_001",
+  "severity": "high",
+  "message": "Large USDC outflow detected from reserve wallet.",
+  "tx_hash": "0xabc123"
+}
+Integration With Portfolio Manager
+
+The Wallets module sends normalized wallet data to the Portfolio Manager.
+
+The Portfolio Manager uses this data to:
+
+Calculate total treasury value
+Analyze asset allocation
+Compare current allocation against treasury policy
+Identify rebalancing opportunities
+Generate treasury reports
+Integration With Risk Engine
+
+The Risk Engine uses wallet data to evaluate:
+
+Asset concentration risk
+Chain concentration risk
+Stablecoin exposure
+Counterparty exposure
+Liquidity risk
+Operational wallet risk
+Security Principles
+
+The Wallets module should follow strict security boundaries:
+
+Read-only wallet access by default
+No private keys stored
+No seed phrases stored
+No automatic transaction signing
+No direct fund control
+Multisig-first design
+Human approval required for execution
+Full logging of wallet monitoring events
+Example Workflow
+A treasury wallet is added to the system.
+The Wallets module detects the chain and address type.
+Token balances are fetched.
+Recent transactions are analyzed.
+Wallet data is normalized.
+The Portfolio Manager receives updated balance data.
+The Risk Engine evaluates wallet-related risks.
+Alerts are generated if abnormal activity is detected.
+Future Improvements
+
+Potential future extensions:
+
+Safe multisig integration
+Wallet labeling system
+Cross-chain wallet tracking
+Gas usage analytics
+Counterparty reputation scoring
+Address book for known entities
+Wallet activity timeline
+Treasury inflow and outflow forecasting
+Wallet-level risk scoring
+Automated anomaly detection
