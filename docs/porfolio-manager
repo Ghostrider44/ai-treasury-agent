@@ -1,1 +1,239 @@
+Portfolio Manager
 
+Overview
+
+The Portfolio Manager is the central intelligence layer of the AI Treasury Agent.
+
+It aggregates wallet balances, market data, treasury policies, and risk assessments to produce portfolio insights and actionable recommendations. Rather than executing transactions directly, it evaluates the current treasury state and proposes optimized strategies aligned with the organization's objectives.
+
+The Portfolio Manager serves as the decision engine that connects all other system components.
+
+
+
+Objectives
+
+The Portfolio Manager aims to:
+
+Maintain an up-to-date view of the treasury
+Calculate portfolio allocation
+Monitor asset performance
+Optimize capital allocation
+Recommend portfolio rebalancing
+Enforce treasury policies
+Generate AI-powered recommendations
+Support governance and executive reporting
+Core Responsibilities
+Portfolio Aggregation
+
+The Portfolio Manager consolidates data from all monitored wallets into a unified treasury view.
+
+It calculates:
+
+Total portfolio value
+Asset allocation
+Chain allocation
+Wallet allocation
+Stablecoin exposure
+Yield-generating positions
+Allocation Analysis
+
+The module continuously evaluates portfolio composition.
+
+Example allocation:
+
+Asset	Allocation
+ETH	42%
+USDC	28%
+BTC	18%
+TAIKO	7%
+Other	5%
+
+The Portfolio Manager compares current allocation against predefined treasury policies.
+
+Performance Tracking
+
+The system monitors treasury performance over time.
+
+Metrics include:
+
+Total portfolio value
+Daily return
+Weekly return
+Monthly return
+Unrealized gains
+Realized gains
+Asset performance
+Portfolio growth
+
+Example:
+
+{
+  "portfolio_value_usd": 2850000,
+  "daily_return": 1.2,
+  "monthly_return": 8.4,
+  "best_performing_asset": "ETH"
+}
+Rebalancing Analysis
+
+The Portfolio Manager evaluates whether portfolio allocations remain within acceptable policy limits.
+
+Example conditions:
+
+ETH allocation exceeds maximum target
+Stablecoin allocation below minimum reserve
+Single protocol exposure too high
+Chain concentration exceeds policy
+
+Example recommendation:
+
+{
+  "action": "rebalance",
+  "reason": "ETH allocation exceeds target by 12%",
+  "priority": "high"
+}
+Treasury Policies
+
+The module validates portfolio composition against configurable treasury policies.
+
+Examples:
+
+Maximum allocation per asset
+Minimum stablecoin reserves
+Maximum protocol exposure
+Maximum chain exposure
+Minimum liquidity requirements
+Approved investment universe
+
+Example:
+
+{
+  "max_asset_allocation": 40,
+  "min_stablecoin_reserve": 20,
+  "max_protocol_exposure": 25
+}
+AI Recommendation Engine
+
+The AI recommendation engine combines portfolio analytics with market conditions and risk assessments.
+
+Possible recommendations include:
+
+Increase stablecoin reserves
+Reduce exposure to volatile assets
+Diversify across chains
+Rebalance allocations
+Allocate idle capital to yield opportunities
+Reduce protocol concentration
+Delay execution due to unfavorable market conditions
+
+Example:
+
+{
+  "summary": "Portfolio concentration exceeds treasury policy.",
+  "recommendation": "Reduce ETH allocation and increase USDC reserves.",
+  "confidence": 0.94
+}
+Inputs
+
+The Portfolio Manager receives data from multiple modules.
+
+Wallets
+Wallet balances
+Transactions
+Asset holdings
+Wallet classifications
+Market Data
+Token prices
+Liquidity metrics
+Market volatility
+Yield opportunities
+Market signals
+Risk Engine
+Risk score
+Portfolio alerts
+Exposure analysis
+Treasury policy violations
+Outputs
+
+The Portfolio Manager provides:
+
+Portfolio summaries
+Allocation reports
+Treasury recommendations
+Rebalancing proposals
+Governance reports
+Executive dashboards
+Data for the Execution Layer
+Portfolio Evaluation Workflow
+Wallets
+      │
+      ▼
+Market Data
+      │
+      ▼
+Risk Engine
+      │
+      ▼
+Portfolio Analysis
+      │
+      ▼
+Policy Validation
+      │
+      ▼
+AI Recommendations
+      │
+      ▼
+Execution Proposal
+Example Portfolio Summary
+{
+  "portfolio_value": 2850000,
+  "risk_score": 38,
+  "allocation": {
+    "ETH": 42,
+    "USDC": 28,
+    "BTC": 18,
+    "TAIKO": 7,
+    "Other": 5
+  },
+  "status": "Healthy",
+  "recommended_action": "Monitor only"
+}
+Reporting
+
+The Portfolio Manager generates reports suitable for treasury teams, executives, and governance participants.
+
+Typical reports include:
+
+Portfolio composition
+Historical performance
+Risk overview
+Allocation trends
+Treasury health score
+Policy compliance
+Recommended actions
+Security Principles
+
+The Portfolio Manager is designed with strict governance controls.
+
+Key principles:
+
+Read-only portfolio analysis
+No custody of private keys
+No autonomous fund movement
+Human approval before execution
+Transparent recommendation logic
+Full audit trail
+Policy-driven decision making
+Future Enhancements
+
+Future capabilities may include:
+
+AI-driven treasury forecasting
+Dynamic allocation optimization
+Scenario planning and stress testing
+Multi-objective portfolio optimization
+Predictive cash flow analysis
+Treasury KPI dashboards
+Governance proposal generation
+Automated policy compliance monitoring
+Institutional reporting exports
+Machine learning–based portfolio optimization
