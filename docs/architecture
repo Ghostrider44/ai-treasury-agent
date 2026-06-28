@@ -1,5 +1,9 @@
 Architecture Diagram
 
+
+Create a Mermaid diagram showing the relationship between Wallets, Risk Engine, Market Data, Execution Layer, and Portfolio Manager.
+
+
   
   flowchart TD
 
