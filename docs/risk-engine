@@ -1,0 +1,17 @@
+Define risk engine module
+
+Document the logic for asset concentration, volatility, liquidity, and counterparty risk.
+
+
+Risk Engine
+
+Evaluates treasury exposure and portfolio risk.
+
+Responsibilities:
+
+Asset concentration analysis
+Stablecoin risk monitoring
+Volatility alerts
+Counterparty exposure
+Liquidity risk
+Scenario simulation
