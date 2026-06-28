@@ -1,4 +1,4 @@
-# ai-treasury-agent
+# AI-treasury-agent
 Ai agent for treasury mngmt
 
 
