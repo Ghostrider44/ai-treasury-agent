@@ -1,1 +1,15 @@
-flowchart TD A[Wallets] --> B[Portfolio Manager] C[Market Data] --> B B --> D[Risk Engine] D --> B B --> E[Execution Layer] E --> F[Approved Transactions] A --> G[On-chain Monitoring] C --> H[Price & Liquidity Feeds] D --> I[Risk Alerts] B --> J[Treasury Reports]
+Architecture Diagram
+
+flowchart TD
+
+    A[Wallets] --> B[Portfolio Manager]
+    C[Market Data] --> B
+    B --> D[Risk Engine]
+    D --> B
+    B --> E[Execution Layer]
+    E --> F[Approved Transactions]
+
+    A --> G[On-chain Monitoring]
+    C --> H[Price & Liquidity Feeds]
+    D --> I[Risk Alerts]
+    B --> J[Treasury Reports]
