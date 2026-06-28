@@ -22,38 +22,6 @@ Core Modules:
 5. Portfolio Manager
 
 
-Architecture Diagram
-flowchart TD
-
-    A[Wallets] --> B[Portfolio Manager]
-    C[Market Data] --> B
-    B --> D[Risk Engine]
-    D --> B
-    B --> E[Execution Layer]
-    E --> F[Approved Transactions]
-
-    A --> G[On-chain Monitoring]
-    C --> H[Price & Liquidity Feeds]
-    D --> I[Risk Alerts]
-    B --> J[Treasury Reports]
-
-
-System Flow
-sequenceDiagram
-    participant Wallets
-    participant MarketData
-    participant PortfolioManager
-    participant RiskEngine
-    participant ExecutionLayer
-
-    Wallets->>PortfolioManager: Send balances and transactions
-    MarketData->>PortfolioManager: Send prices and liquidity data
-    PortfolioManager->>RiskEngine: Request risk analysis
-    RiskEngine-->>PortfolioManager: Return exposure and alerts
-    PortfolioManager->>ExecutionLayer: Prepare recommended action
-    ExecutionLayer-->>PortfolioManager: Return execution plan
-
-
 
 Example Use Case
 
