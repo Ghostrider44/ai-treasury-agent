@@ -1,3 +1,18 @@
 Define wallet monitoring module
 
+
+Wallets
+
+Tracks treasury wallets across multiple chains.
+
+Responsibilities:
+
+Monitor balances
+Track inflows and outflows
+Detect abnormal movements
+Classify wallets by purpose
+Support multisig and institutional custody flows
+
+
+
 Document how the agent will track balances, transactions, and wallet classification.
